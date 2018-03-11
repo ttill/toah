@@ -1,33 +1,15 @@
 <?php
 /*
- *      thplugins.php v130129
- * 
- *      Copyright (C) 2009-2014 Till Theato <root@ttill.de>
+ *      thplugins.php v180311
+ *
+ *      Copyright (C) 2009-2018 Till Theato <theato@ttill.de>
  *           http://ttill.de/toah
- * 
+ *
  *      This program is free software: you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation, either version 3 of the License, or
  *      (at your option) any later version.
  */
-
-/**
- * Registration of the plugins in this file.
- * Uncomment respective line to disable plugin.
- */
-
-Toah::registerModule(Toah::PreSnippetsInsert, "getInfo");
-// Toah::registerModule(Toah::PreDomCreation, "noToah");
-// Toah::registerModule(Toah::PreSnippetsInsert, "counter");
-// Toah::registerModule(Toah::PreOutput + 1, "debugToah");
-
-/**
- * Configuration
- */
-
-/* File containing the details required to setup a MySQL connection (required for counter plugin). @see mysqlConnection. */
-define("mysqlDataPath", rtrim(dirname(__FILE__), '/') . "/pw.php");
-// define("mysqlDataPath", rtrim($_SERVER["DOCUMENT_ROOT"], '/') . "/scripts/pw.php");
 
 
 function getInfo()
@@ -47,9 +29,6 @@ function noToah()
    Connection details are stored in a separate file (@see mysqlDataPath) in the variables $dbServer, $dbUser, $dbPassword, $dbName. */
 function mysqlConnection()
 {
-    if (defined("MYSQL_CONNECTION_ESTABLISHED"))
-        return true;
-
     if (is_file(mysqlDataPath)) {
         include_once mysqlDataPath;
     } else {
@@ -57,37 +36,35 @@ function mysqlConnection()
         return false;
     }
 
-    if(!mysql_connect($dbServer, $dbUser, $dbPassword)) {
-        Toah::log("Unable to connect to MySQL server $dbServer!", E_ERROR);
-        return false;
-    }
-    if(!mysql_select_db($dbName)) {
-        Toah::log("Unable to select database $dbName!", E_ERROR);
+    $db = new mysqli($dbServer, $dbUser, $dbPassword, $dbName);
+
+    if($db->connect_errno > 0) {
+        Toah::log('Unable to connect to database [' . $db->connect_error . ']', E_ERROR);
         return false;
     }
 
-    define("MYSQL_CONNECTION_ESTABLISHED", 1);
-    return true;
+    return $db;
 }
 
 /* Provides a very simple counter functionality using a MySQL database. Each page hit increases the counter. @see mysqlConnection */
 function counter()
 {
-	if(mysqlConnection())
+    $db = mysqlConnection();
+	if($db)
 	{
 		$date = filemtime($_SERVER["SCRIPT_FILENAME"]);
-		
-		$query = mysql_query("SELECT * FROM `counter` WHERE page='" . $_SERVER["PHP_SELF"] . "'");
-		
-		if($obj = mysql_fetch_object($query)) {
-			++$obj->views;
-			mysql_query("UPDATE `counter` SET views='" . $obj->views . "'"
-					. ($obj->date < $date ? ", date='" . $date . "' " : " ")
-					.  "WHERE page='" . $_SERVER["PHP_SELF"] . "'");
+
+		$query = $db->query("SELECT * FROM `counter` WHERE page='" . $_SERVER["PHP_SELF"] . "'");
+
+		if($obj = $query->fetch_assoc()) {
+			$obj["views"] += 1;
+			$db->query("UPDATE `counter` SET views='" . $obj["views"] . "'"
+					   . ($obj["date"] < $date ? ", date='" . $date . "' " : " ")
+					   .  "WHERE page='" . $_SERVER["PHP_SELF"] . "'");
 		} else
-			mysql_query("INSERT INTO `counter` (page, views, date) VALUES ( '" . $_SERVER["PHP_SELF"] . "', '1', '" . $date . "')");
-	
-		Toah::$snip["counter"] = array($obj->views ? $obj->views : 1, "//*[@id='thCounter']");
+			$db->query("INSERT INTO `counter` (page, views, date) VALUES ( '" . $_SERVER["PHP_SELF"] . "', '1', '" . $date . "')");
+
+		Toah::$snip["counter"] = array($obj["views"] ? $obj["views"] : 1, "//*[@id='thCounter']");
 	}
 }
 

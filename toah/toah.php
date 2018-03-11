@@ -1,21 +1,15 @@
 <?php
 /*
- *      Copyright (C) 2009-2014 Till Theato <root@ttill.de>
+ *      Copyright (C) 2009-2018 Till Theato <theato@ttill.de>
  *           http://ttill.de/toah
- * 
+ *
  *      This program is free software: you can redistribute it and/or modify
  *      it under the terms of the GNU General Public License as published by
  *      the Free Software Foundation, either version 3 of the License, or
  *      (at your option) any later version.
  */
- 
- /**
-  * Configuration
-  */
-/* Handles whether toah should be directly accessible or only via include or redirect (htaccess).
-   Combined with redirect this only works if the webserver sets $_SERVER["REDIRECT_STATUS"] (Apache does). */
-define("TOAH_ALLOW_DIRECT_ACCESS", false);
 
+ include_once rtrim(dirname(__FILE__), '/') . "/config.php";
 
 class Toah
 {
@@ -25,7 +19,7 @@ class Toah
      */
 
     /* Version number of toaH */
-    const VERSION = 141004;
+    const VERSION = 180311;
 
      /* Module stages. Use them when calling registerModule. */
     const PreDomCreation = 0,
