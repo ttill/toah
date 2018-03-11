@@ -1,3 +1,7 @@
+v180311 (2018/03/11)
+  * Port counter plugin to mysqli for PHP7 compatibility
+  * Move configuration to separate file
+
 v141004 (2014/10/04)
   * Some small code cleanups
 
@@ -104,70 +108,70 @@ Changelog from bzr:
 
 ------------------------------------------------------------
 revno: 12
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Mon 2009-04-06 08:29:21 +0200
 message:
   moved installation part from counter into new file for easier deletion
 ------------------------------------------------------------
 revno: 11
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-04-05 23:20:22 +0200
 message:
   New Plugins: mysql connects to database; counter stores pagevisits in database
 ------------------------------------------------------------
 revno: 10
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-04-05 23:02:42 +0200
 message:
   Plugins now sorted by number
 ------------------------------------------------------------
 revno: 9
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sat 2009-04-04 19:57:34 +0200
 message:
   New Plugin: Possible to add standart menu in the footer via footer.list
 ------------------------------------------------------------
 revno: 8
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sat 2009-04-04 19:51:46 +0200
 message:
   Now possible to add an element to a parent element by tagnumber from the end of the document
 ------------------------------------------------------------
 revno: 7
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sat 2009-04-04 16:40:58 +0200
 message:
   Added a Pluginloader and the title plugin to handle title.txt
 ------------------------------------------------------------
 revno: 6
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sat 2009-04-04 16:30:13 +0200
 message:
   Removed title without menu functionality
 ------------------------------------------------------------
 revno: 5
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-03-15 15:13:56 +0100
 message:
   Added Plugin functionality
 ------------------------------------------------------------
 revno: 4
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Tue 2009-03-03 22:14:23 +0100
 message:
   big parts rewritten -> big changes
 ------------------------------------------------------------
 revno: 3
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-03-01 21:49:44 +0100
 message:
@@ -178,14 +182,14 @@ message:
   the Text class is now a Singleton -> easier to handle
 ------------------------------------------------------------
 revno: 2
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-03-01 19:35:37 +0100
 message:
   Fixed: read the first language file that is found; not the one in the top directory
 ------------------------------------------------------------
 revno: 1
-committer: Till Theato 
+committer: Till Theato
 branch nick: trunk
 timestamp: Sun 2009-03-01 18:26:30 +0100
 message:
@@ -204,7 +208,7 @@ message:
 
 
 ===== 090131 =====
-  * **fixed**: the input files(menu.list, lang.csv, *file*.php, title.txt) can now be encoded different from utf-8 (tested with 
+  * **fixed**: the input files(menu.list, lang.csv, *file*.php, title.txt) can now be encoded different from utf-8 (tested with
 ISO-8859-1 only)
 
 ===== 090122 =====
