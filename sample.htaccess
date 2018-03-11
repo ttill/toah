@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+
+    # exclude toah
+    ## change if toaH is placed somewhere else
+    RewriteCond %{REQUEST_URI} !toah/toah.php$
+
+    # only forward existing files
+    ## comment out if you don't use existing filenames in toah
+    RewriteCond %{REQUEST_FILENAME} -f
+
+    # main rule
+    ## change if you want to use different filename extensions
+    ## change if toaH is placed somewhere else
+    RewriteRule ^(.+)\.(php|html)$ toah/toah.php?file=%{REQUEST_FILENAME}&link=%{REQUEST_URI} [L,qsa]
+</IfModule>

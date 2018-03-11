@@ -1,0 +1,11 @@
+<body>
+	<div>
+		<h1 id="thMainTitle"></h1>
+		<h2 id="thPageTitle"> </h2>
+		<ul id="thPath"><li/><li class="thSepartor">/</li></ul>
+        <ul id="thMenu"><li/><ul class="subMenu"/><li/></ul>
+		<p>Autor: <span id="thAuthor"></span> <span id="thChange"></span></p>
+	</div>
+	<div id="thContent"></div>
+</body>
+

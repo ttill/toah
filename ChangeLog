@@ -1,0 +1,254 @@
+v141004 (2014/10/04)
+  * Some small code cleanups
+
+v140928 (2014/09/28)
+  * Add sub-menu functionality
+
+v130129 (2013/01/29)
+  * Add option to prevent direct acccess of toah.php
+
+v130125 (2013/01/25)
+  * Try to make sure the file to handle is inside the webroot directory
+
+v130108 (2013/01/08)
+  * Send content type headers earlier to avoid problems when a plugins outputs something directly
+  * Add a simple log functionality to toaH (not printed/handled by toaH itself)
+  * Include a plugin file (toah/thplugins.php) in the archive containing the following plugins: getInfo - moved from toah.php, noToah - allows to disable toah by passing a parameter, counter - a very simple stat counter, debugToah - outputs the log and some other data
+
+v121231 (2012/12/31)
+  * Provide proper content type for XHTML documents (fixes some tag closing issues)
+
+v121230 (2012/12/30)
+  * Enhance API
+  * Updated htaccess to pass on the query string
+
+v121216 (2012/12/16)
+  * Remove dependencies between path, menu and titles as read from "menu.txt" files; Each of them should now work independently even if a wrapper item for another one is missing in the template
+  * Some small code cleanups
+
+v120719
+  * fixed: When in webroot wrong link was used
+  * Important: Remove encoding detection and conversion between different ones since it was very buggy and caused a lot of limits. Now every file used by toaH has to be utf-8 encoded!
+
+v120620
+  * fixed: Fallback to HTML parsing not working
+  * When ASCII encoding is detected by PHP for the document prefer UTF-8 instead
+  * Don't hide errors/warnings by default but rely on the server settings
+
+v120530
+  * Stop using $_SERVER["DOCUMENT_ROOT"] since its availability is not guaranteed. This requires an additional parameter when toaH is used through mod_rewrite or in a similar way: link should contain the filename of the page to parse, relative to the document root (see sample.htaccess).
+  * When using toaH by including it, remove the necessity to call toahEnd() at the end of input. toaH needs to be included with include_once/require_once. include or require will fail!
+  * Enhance module flexibility by introducing new stages, accessible through constants. The documentation for the module API is also improved. Modules need an update to the new stages!
+  * When the template file does not exist do not fallback to an internal one, but run without it.
+
+v120523
+  * smaller code cleanups
+  * -1 file access
+
+v120103
+  * changed: meaning of file parameter. It should now contain the absolute, full path.
+  * fixed: duplication of the xmlns attribute of the html tag when using the XHTML 1.0 Doctype
+  * distinguish between HTML and XHTML when loading and saving the XML DOM to gain better support for HTML
+  * sample.htaccess (in archives) simplified
+
+v120102
+  * fixed: loading of thplugins.php when toah used via include
+  * cleaner code structure (separation of menu and stylesheet modules from toaH core class)
+  * remove T::$file and T::$link. If toaH is used via parameter $_SERVER["SCRIPT_FILENAME"] and $_SERVER["PHP_SELF"] will now be set to the input file to not require distinguishment between usage via include and parameter anymore.
+
+v111230
+  * fixed: last element in body was being dropped (in most cases just whitespace)
+
+v111229
+  * fixed: links in menu did not work in webroot due to double slash
+
+v111222
+  * fixed: make usage via include work again
+
+v100330
+  * change Backend: Simple HTML Dom -> DOM + DomXPath
+  * use static class instead of global array to store data
+  * allow more possibilities for plugins / modules
+  * Speed boost (up to twice as fast as previous versions of toaH v2)
+
+v100214
+  * cleaner links: links used in the menu, for including stylesheets, ... are now relative to the webroot. (till now they might have looked something like this: ./../../../../index.php)
+  * removed check if linked file (menu) exists as this may lead to problems when using a rewrite engine
+  * some smaller clean-ups
+
+v100119
+  * new: load possible plugins from thplugins.php (same directory as toah.php) (no plugins included yet) (documentation on how to write plugins to follow)
+
+v100111
+  * fixed: do not quit script if warning was created somewhere before toah execution
+  * fixed: try to work around if enviroment variable DOCUMENT_ROOT is not set
+
+v100110
+  * new: add support to open file via parameter (for details see the html)
+  * fixed: output buffer + callback doesn't work on some servers -> use output buffer without callback (for details see the html)
+
+v091128
+  * fixed: correct order of stylesheets: current one is last to make it override parent ones
+  * fixed: support different encodings: toaH detects the encoding from the HTML File and encodes everything from different files (menu, template) accordingly
+
+v091126
+  * fixed: Now the links to parent elements in the path refers to a directory rather than to "directory/index.php". This allows the user to use a directory index different to "index.php".
+
+v091124
+  * new: Added support for separators between Path element (e.g. "Parent Child" now might look "Parent / Child"). To use the separator add a second child to #thPath similar to this one: <li>/</li>
+
+
+Changelog for toah 1 (please note: major parts of toah 2 were rewritten)
+====== v1.6 ======
+Changelog from bzr:
+
+------------------------------------------------------------
+revno: 12
+committer: Till Theato 
+branch nick: trunk
+timestamp: Mon 2009-04-06 08:29:21 +0200
+message:
+  moved installation part from counter into new file for easier deletion
+------------------------------------------------------------
+revno: 11
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-04-05 23:20:22 +0200
+message:
+  New Plugins: mysql connects to database; counter stores pagevisits in database
+------------------------------------------------------------
+revno: 10
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-04-05 23:02:42 +0200
+message:
+  Plugins now sorted by number
+------------------------------------------------------------
+revno: 9
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sat 2009-04-04 19:57:34 +0200
+message:
+  New Plugin: Possible to add standart menu in the footer via footer.list
+------------------------------------------------------------
+revno: 8
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sat 2009-04-04 19:51:46 +0200
+message:
+  Now possible to add an element to a parent element by tagnumber from the end of the document
+------------------------------------------------------------
+revno: 7
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sat 2009-04-04 16:40:58 +0200
+message:
+  Added a Pluginloader and the title plugin to handle title.txt
+------------------------------------------------------------
+revno: 6
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sat 2009-04-04 16:30:13 +0200
+message:
+  Removed title without menu functionality
+------------------------------------------------------------
+revno: 5
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-03-15 15:13:56 +0100
+message:
+  Added Plugin functionality
+------------------------------------------------------------
+revno: 4
+committer: Till Theato 
+branch nick: trunk
+timestamp: Tue 2009-03-03 22:14:23 +0100
+message:
+  big parts rewritten -> big changes
+------------------------------------------------------------
+revno: 3
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-03-01 21:49:44 +0100
+message:
+  class: Language
+  changed name: Language -> Text
+  changed language file format: now '=' is used as seperator
+  changed language file format: the index has to be in upper case
+  the Text class is now a Singleton -> easier to handle
+------------------------------------------------------------
+revno: 2
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-03-01 19:35:37 +0100
+message:
+  Fixed: read the first language file that is found; not the one in the top directory
+------------------------------------------------------------
+revno: 1
+committer: Till Theato 
+branch nick: trunk
+timestamp: Sun 2009-03-01 18:26:30 +0100
+message:
+  Initial import
+
+
+
+====== v1.5 ======
+
+===== 090207 =====
+  * **fixed**: php code can be used in the input file again ( this wasn't posible since //v1.5 090120// )
+
+===== 090206 =====
+  * **fixed**: the ''meta'' tag containing the author will be found if it's not the first one, too
+  * **fixed**: if no ''meta'' tag containing the author exists no error will be shown
+
+
+===== 090131 =====
+  * **fixed**: the input files(menu.list, lang.csv, *file*.php, title.txt) can now be encoded different from utf-8 (tested with 
+ISO-8859-1 only)
+
+===== 090122 =====
+  * **changed**: standart stylesheet is completely rewritten -> simpler, displays correct if no menu exists
+  * **fixed**: show author and the last edit if no menu file exists
+
+===== 090121 =====
+  * **license**: updated: GNU GPL v2 -> GNU GPL v3
+  * **fixed**: no offset notices with error_reporting(E_ALL) and without menu file and stylsheet
+  * **fixed**: no stylesheet is included if no exists
+
+===== 090120 =====
+  * **new**: DOM reads file -> no need to call //output()// ( see [[howto:include|HowTo:include the script into a HTML-File]] )
+
+
+===== 090118 =====
+
+  * **Completly Rewritten**:
+    * Object-oriented
+    * completly done with DOM -> [[php4:general|PHP4 Port]]
+    * use of HTML-Entities without extra items ( See [[howto:menu|HowTo:Menu]] )
+
+
+====== v1.0 ======
+
+===== 090113 =====
+  * **new**: support of multiple languages ( See [[howto:lang|Howto:Languages]] )
+
+===== 090112 =====
+  * **new**:   you can now use html entities (and tags) in the menu file ( See [[howto:menu|HowTo:Menu]] )
+  * **new**:   read "title.txt" for title if no menu file exists
+  * **fixed**: script works if no menu file exists
+  * **fixed**: only add link to head if stylesheet exists
+  * **fixed**: only add title if one exists
+  * **fixed**: only add author if one exists
+
+===== 090111 =====
+  * **Changed name**: head.php v2.0 -> toah.php v1.0
+  * While checking for menu files the title is read directly -> no extra loop is needed
+  * The "[" and "]" in links are removed because they would be part of the design
+  * variable names:
+    * old ones (from head.php) changed to english
+    * grouped var names (e.g $caption -> $mCaption because it is part of the menu; $menus -> $mNumber; ...)
+
+
+===== 090108 =====
+  * Initional Release
